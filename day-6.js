@@ -10,21 +10,14 @@ function maxDistance(movements) {
       rightCount++;
     }
   });
-  const maxDistance = movementsArray.reduce((curr, data) => {
-    if (data === "*") {
-      if (rightCount >= leftCount) {
-        curr = curr + 1;
-      } else {
-        curr = curr - 1;
-      }
-    }
-    if (data === ">") {
-      curr = curr + 1;
-    }
-    if (data === "<") {
-      curr = curr + -1;
-    }
-    return curr;
-  }, 0);
-  return Math.abs(maxDistance);
+  return Math.abs(
+    movementsArray
+      .map((data) => {
+        if (data === "*") {
+          return rightCount >= leftCount ? 1 : -1;
+        }
+        return data === ">" ? 1 : -1;
+      })
+      .reduce((curr, data) => curr + data, 0)
+  );
 }
